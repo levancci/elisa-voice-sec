@@ -1,0 +1,18 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Local model artifacts and voice data are never committed.
+models/weights/
+data/
+*.onnx
+*.pt
+*.pth
+*.wav
+*.flac
+
+# Local reports and environment files.
+.env
+coverage.xml
+.coverage

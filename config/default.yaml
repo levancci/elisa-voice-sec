@@ -1,0 +1,13 @@
+# Phase 0 configuration scaffold. Values become authoritative as phases add
+# the corresponding implementation.
+challenge:
+  length: 4
+  ttl_seconds: 60
+enrollment:
+  minimum_samples: 3
+  recommended_samples: 5
+audio:
+  sample_rate_hz: 16000
+  minimum_speech_seconds: 1.0
+scoring:
+  speaker_threshold: 0.0

@@ -1,0 +1,10 @@
+# Model entries are added only after source, license, and SHA-256 auditing.
+default_embedding: ecapa-int8
+models:
+  - name: ecapa-int8
+    kind: speaker-embedding
+    version: local-onnx-qdq-conv-only-v1
+    path: models/weights/ecapa.int8.onnx
+    sha256: 3234FED842D55924F495A24A3A5A64CE1D9C822555ADBDA1403B6CBA2E792166
+    status: provisional-development-default
+    requires_reenrollment_on_change: true

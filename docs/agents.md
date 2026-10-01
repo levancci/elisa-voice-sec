@@ -1,0 +1,1 @@
+read the design doc and brief first, the hard constraints (offline, permissive licenses, no accounts or spend), and "stop at checkpoints."
