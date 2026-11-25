@@ -20,8 +20,8 @@ from pathlib import Path
 import yaml
 
 # Prebuilt ECAPA int8 ONNX file, attached to the repo's GitHub Release.
-# Maintainer: replace <your-username> with your GitHub username after you upload the file.
-ECAPA_URL = "https://github.com/<your-username>/elisa/releases/download/v0.1.0/ecapa.int8.onnx"
+# If you fork this repo, point this at your own release.
+ECAPA_URL = "https://github.com/levancci/elisa-voice-sec/releases/download/v0.1.0/ecapa.int8.onnx"
 VOSK_URL = "https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip"
 
 REGISTRY = Path("models/registry.yaml")

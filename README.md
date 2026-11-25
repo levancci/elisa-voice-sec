@@ -27,8 +27,8 @@ Works on Windows, macOS and Linux.
 **1. Get the code**
 
 ```bash
-git clone https://github.com/levancci/elisa-voice-sec.git   
-cd elisa
+git clone https://github.com/levancci/elisa-voice-sec.git
+cd elisa-voice-sec
 ```
 
 **2. Install everything**
