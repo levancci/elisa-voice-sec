@@ -44,6 +44,20 @@ python -m pip install sounddevice==0.5.2
 python tools/record_protocol.py --participant p01 --record --consent-confirmed
 ```
 
+Provide the session metadata once on the same command. It is copied to every
+manifest row, while `room_type` is derived from the existing quiet/noisy pass:
+
+```powershell
+python tools/record_protocol.py --participant p01 --record --consent-confirmed `
+   --device-model "Laptop model" --microphone-model "Headset model" `
+   --environment-note "Closed room, desk setup, no HVAC noise"
+```
+
+Each row records `session_started_at_utc`, `device_model`,
+`microphone_model`, `room_type`, and `environment_note` in addition to the
+per-take `recorded_at_utc`. Use `unspecified` only when the device or
+microphone model truly cannot be identified.
+
 The recorder captures 4-second, 16 kHz, mono, signed-16-bit PCM WAV files. It
 waits for Enter before every take so the participant can prepare. For each
 prompt, say the four digits naturally in one utterance. In the noisy pass,

@@ -8,3 +8,11 @@ models:
     sha256: 3234FED842D55924F495A24A3A5A64CE1D9C822555ADBDA1403B6CBA2E792166
     status: provisional-development-default
     requires_reenrollment_on_change: true
+  - name: vosk-small-en-us
+    kind: digit-recognizer
+    version: vosk-model-small-en-us-0.15
+    path: models/weights/vosk-model-small-en-us-0.15
+    hash_path: models/weights/vosk-model-small-en-us-0.15.zip
+    sha256: 30F26242C4EB449F948E42CB302DD7A686CB29A3423A8367F99FF41780942498
+    status: provisional-phase-3-default
+    requires_reenrollment_on_change: false

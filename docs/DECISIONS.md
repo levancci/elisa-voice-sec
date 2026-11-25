@@ -54,13 +54,52 @@
 
 ## D-0005: Phase 3 digit benchmark scope
 
-- **Status:** pending CP3 approval
-- **Decision:** Benchmark Vosk with digit-restricted decoding. Do not train or
-  fine-tune Method A in v1. Method A remains pending an approved pretrained
-  connected-digit CTC checkpoint.
-- **Reason:** Vosk is executable offline, while no eligible Method A checkpoint
-  was identified and the brief prohibits training/fine-tuning.
+- **Status:** accepted; close-out decision
+- **Decision:** Benchmark Vosk with digit-restricted decoding and proceed with it
+  as the provisional digit method into Phase 4. Do not train or fine-tune
+  Method A in v1. Method A is closed as a negative finding for the v1 scope:
+  no reviewed offline pretrained candidate fits the combined 30-80 MB budget,
+  and any custom tiny CTC training is deferred to a post-v1 backlog item that
+  requires separate future approval.
+- **Reason:** Vosk is executable offline and is the only reviewed digit model
+  that is both feasible in this phase and small enough for one valid pairing
+  within the budget. Whisper tiny.en and Moonshine tiny are additional
+  pretrained candidates, but each exceeds the full 80 MB budget alone and no
+  reviewed pairing fits the combined design target. The brief still prohibits
+  training/fine-tuning in v1.
 - **Measured constraint:** Vosk exact-string accuracy is 86% overall (90%
-  quiet, 82% noisy) and its unpacked model plus ECAPA int8 is approximately
-  92.7 MB, above the 30-80 MB target.
+  quiet, 82% noisy). The valid WeSpeaker CAM++ VoxCeleb int8 + Vosk pairing
+  totals approximately 79.6 MB and fits the 30-80 MB target; ECAPA int8 +
+  Vosk is 92.7 MB and exceeds it; TitaNet-Small mirror int8 + Vosk is 98.3
+  MB and exceeds it. This remains provisional evidence from 100 recordings and
+  five speakers and will be re-evaluated at CP6.
+- **Budget headroom note:** 79.6 MB leaves only about 0.4 MB of headroom under
+  the 80 MB ceiling. The design doc defines the budget as embedding plus any
+  future anti-spoofing/liveness model combined, not just embedding plus the
+  digit check. No third model is in the v1 pipeline, but this leaves almost no
+  room for a future addition if that feature is later introduced.
+- **Date:** 2026-10-01
+
+## D-0006: Phase 4 prototype storage
+
+- **Status:** accepted for prototype; revisit at real-app integration
+- **Decision:** Use SQLite behind a storage interface for the Phase 4 backend
+  prototype. Keep the persistence boundary independent of the API and model
+  adapters so it can be replaced with Postgres/pgvector later.
+- **Reason:** The backend needs a runnable local enroll/challenge/verify cycle
+  without introducing a database service or account before the owner chooses
+  the production storage target.
+- **Constraint:** SQLite is a prototype storage choice, not a production
+  approval or a decision against Postgres/pgvector. Revisit it when this
+  integrates with the real application.
+- **Date:** 2026-10-01
+
+## D-0007: Track FastAPI test-client deprecation
+
+- **Status:** accepted; tech debt
+- **Decision:** Keep the current Starlette `TestClient` path for Phase 4 and
+  track its warning about the active `httpx` compatibility path. Do not change
+  the test transport during CP4.
+- **Reason:** The tests pass and the warning is tooling debt, not a backend
+  behavior failure. Revisit when upgrading the FastAPI/Starlette test stack.
 - **Date:** 2026-10-01

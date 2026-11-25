@@ -35,7 +35,9 @@ download.
 | Candidate / artifact | Official source | Download / account | Code license | Weights license | Training-data terms | Size | SHA-256 | Verdict / status | Fallback |
 |---|---|---|---|---|---|---:|---|---|---|
 | Vosk `vosk-model-small-en-us-0.15` (Method B baseline) | [Vosk model list](https://alphacephei.com/vosk/models), [Vosk API](https://github.com/alphacep/vosk-api) | Direct model download; no account or key indicated | Apache-2.0 | Apache-2.0 in official model list | Training-data terms not stated on the model list; unverified | 41,205,931 bytes downloaded (40 MB listed) | `30F26242C4EB449F948E42CB302DD7A686CB29A3423A8367F99FF41780942498` | approved for Phase 3 benchmarking only, alongside Method A; not production-approved | Tiny CTC digit recognizer, if trained data is approved |
-| Tiny custom CTC digit recognizer (Method A) | No artifact selected; implementation to be benchmarked in Phase 3 | Requires approved local recordings or a permissively licensed digit corpus | Project code will be Apache-2.0 | No pretrained weights selected | TIDIGITS is excluded unless owner approves its paid license; team recordings require consent | unverified | unverified | pending data and model decision | Vosk constrained-decoding baseline |
+| OpenAI `whisper-tiny.en` (Method A candidate) | [Hugging Face checkpoint](https://huggingface.co/openai/whisper-tiny.en), [OpenAI repository](https://github.com/openai/whisper) | Direct Hub download; no key indicated | MIT repository; checkpoint card lists Apache-2.0 | Apache-2.0 on checkpoint card | Trained on 680k hours of weakly supervised internet audio; provenance/terms require review | 151 MB safetensors; 608 MB repository including alternate formats | unverified | candidate only; custom token-prefix constraint is possible, but not benchmarked and exceeds the size target | Vosk constrained-decoding baseline |
+| Moonshine `moonshine-tiny` (Method A candidate) | [Hugging Face checkpoint](https://huggingface.co/moonshine-ai/moonshine-tiny), [Moonshine repository](https://github.com/moonshine-ai/moonshine) | Direct Hub download; no key indicated | MIT | MIT for current English models | Training-data terms require review | 108 MB weights; 110 MB repository | unverified | candidate only; offline generation is available but no native grammar API is documented, and it exceeds the size target | Vosk constrained-decoding baseline |
+| NVIDIA `parakeet-ctc-0.6b` / `parakeet-tdt-0.6b-v2` (Method A candidates) | [Parakeet CTC](https://huggingface.co/nvidia/parakeet-ctc-0.6b), [Parakeet TDT](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v2) | Direct Hub download; no key indicated | Apache-2.0 NeMo code | CC-BY-4.0 | Model cards describe large mixed/private and public training sources; review required | CTC: 2.44 GB checkpoint; TDT: approximately 600M parameters and at least 2 GB RAM | unverified | not practical for this size target; no turnkey digit grammar API documented | Vosk constrained-decoding baseline |
 
 ## License conflicts requiring legal review
 
@@ -52,6 +54,16 @@ download.
 - **English/VoxCeleb CAM++:** The official WeSpeaker Hugging Face catalog has
   `wespeaker-voxceleb-campplus` and `wespeaker-voxceleb-campplus-LM`, both listed
   Apache-2.0. No English CAM++ artifact was found in the IIC ModelScope catalog.
+- **Budget trade-off note:** The only currently budget-fitting pair is WeSpeaker
+  CAM++ VoxCeleb int8 + Vosk at approximately 79.6 MB. That same pairing is
+  also the one most exposed to the unresolved VoxCeleb licensing conflict. Do
+  not default to it on size alone at CP6; size fit is necessary but not
+  sufficient, and the license risk must remain visible in the final decision.
+- **ModelScope CAM++ follow-up:** Quantize the Chinese-trained ModelScope CAM++
+  with the same corrected int8 policy used for the WeSpeaker CAM++ artifact and
+  add it to the size-comparison table before CP6. It is the one reviewed
+  candidate that could plausibly match WeSpeaker CAM++ on footprint without the
+  open VoxCeleb conflict, but it is not yet measured under the same policy.
 
 ## Excluded or not yet eligible
 

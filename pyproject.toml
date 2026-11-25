@@ -14,6 +14,9 @@ dependencies = [
     "torch>=2.14.0",
     "torchaudio>=2.11.0",
     "speechbrain>=1.1.1",
+    "fastapi>=0.115.0",
+    "pyyaml>=6.0.2",
+    "uvicorn>=0.34.0",
 ]
 
 [dependency-groups]
@@ -24,6 +27,7 @@ dev = [
 	"ruff==0.13.2",
 	"transformers==4.57.1",
 	"vosk==0.3.45",
+    "httpx>=0.28.0",
 ]
 
 [tool.pytest.ini_options]

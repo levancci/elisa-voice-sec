@@ -53,11 +53,17 @@ def build_plan(seed: int, verification_count: int = 10) -> list[dict[str, Any]]:
     return plan
 
 
-def write_plan(plan: list[dict[str, Any]], output: Path, participant_id: str) -> None:
+def write_plan(
+    plan: list[dict[str, Any]],
+    output: Path,
+    participant_id: str,
+    session_metadata: dict[str, str] | None = None,
+) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8") as stream:
         for item in plan:
-            record = {"participant_id": participant_id, **item}
+            record = {"participant_id": participant_id, **(session_metadata or {}), **item}
+            record.setdefault("room_type", item["condition"])
             stream.write(json.dumps(record, sort_keys=True) + "\n")
 
 
@@ -81,7 +87,12 @@ def _record_wav(path: Path, seconds: float, sample_rate: int = 16_000) -> None:
         stream.writeframes(audio.tobytes())
 
 
-def record_plan(plan: list[dict[str, Any]], data_root: Path, participant_id: str) -> None:
+def record_plan(
+    plan: list[dict[str, Any]],
+    data_root: Path,
+    participant_id: str,
+    session_metadata: dict[str, str],
+) -> None:
     """Record each genuine item after an explicit local confirmation."""
     for number, item in enumerate(plan, 1):
         relative = (
@@ -107,6 +118,9 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, help="Plan JSONL path")
     parser.add_argument("--data-root", type=Path, default=Path("data/phase2"))
     parser.add_argument("--record", action="store_true", help="Capture local WAV files")
+    parser.add_argument("--device-model", default="unspecified", help="Recording device model for this session")
+    parser.add_argument("--microphone-model", default="unspecified", help="Microphone model for this session")
+    parser.add_argument("--environment-note", default="", help="Free-text room/setup note for this session")
     parser.add_argument(
         "--consent-confirmed",
         action="store_true",
@@ -121,9 +135,15 @@ def main() -> None:
         raise SystemExit("Refusing to record: obtain and document consent first")
     plan = build_plan(args.seed, args.verification_count)
     output = args.output or args.data_root / args.participant / "protocol.jsonl"
+    session_metadata = {
+        "session_started_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "device_model": args.device_model,
+        "microphone_model": args.microphone_model,
+        "environment_note": args.environment_note,
+    }
     if args.record:
-        record_plan(plan, args.data_root, args.participant)
-    write_plan(plan, output, args.participant)
+        record_plan(plan, args.data_root, args.participant, session_metadata)
+    write_plan(plan, output, args.participant, session_metadata)
     print(f"Wrote {len(plan)} protocol records to {output}")
 
 

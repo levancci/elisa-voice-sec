@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elisa Voice Security</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="wordmark" href="/">ELISA <span>/ VOICE SECURITY</span></a>
+      <span class="status-dot" aria-label="Offline mode">OFFLINE</span>
+    </header>
+
+    <section id="capture-screen" class="screen active" aria-labelledby="capture-title">
+      <div class="eyebrow">SECURITY STEP <span>01</span></div>
+      <h1 id="capture-title">Voiceprint<br><em>check-in.</em></h1>
+      <p class="lede">A fresh spoken challenge confirms the voice and the digits in one short pass.</p>
+
+      <div class="mode-switch" role="tablist" aria-label="Capture mode">
+        <button class="mode active" data-mode="verify" role="tab" aria-selected="true">Verify</button>
+        <button class="mode" data-mode="enroll" role="tab" aria-selected="false">Enroll</button>
+      </div>
+
+      <div class="prompt-panel">
+        <div class="panel-label">CURRENT PROMPT</div>
+        <div id="prompt" class="prompt" aria-live="polite">Ready when you are</div>
+        <div id="prompt-meta" class="prompt-meta">Verification uses a new challenge each time.</div>
+      </div>
+
+      <div class="controls">
+        <button id="primary-action" class="primary-action" type="button">
+          <span class="record-icon" aria-hidden="true"></span><span>Get challenge</span>
+        </button>
+        <button id="reset-action" class="text-action" type="button">Reset</button>
+      </div>
+      <p id="feedback" class="feedback" role="status"></p>
+
+      <div id="enrollment-progress" class="progress-wrap" hidden>
+        <div class="progress-line"><span>Enrollment samples</span><strong id="progress-count">0 / 5</strong></div>
+        <div class="progress-track"><span id="progress-bar"></span></div>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen result-screen" aria-labelledby="result-title" hidden>
+      <div id="result-kicker" class="eyebrow">VERIFICATION RESULT</div>
+      <h2 id="result-title">Access <em id="result-word">denied.</em></h2>
+      <div class="result-grid">
+        <div class="metric"><span>Digits</span><strong id="result-digits">--</strong></div>
+        <div class="metric"><span>Speaker score</span><strong id="result-score">--</strong></div>
+        <div class="metric"><span>Threshold</span><strong id="result-threshold">--</strong></div>
+        <div class="metric"><span>Latency</span><strong id="result-latency">--</strong></div>
+      </div>
+      <div class="reason-block"><span>Reason codes</span><strong id="result-reasons">--</strong></div>
+      <button id="again-action" class="primary-action" type="button">Try again</button>
+    </section>
+
+    <footer><span>LOCAL INFERENCE</span><span>MODEL-BOUND VOICEPRINTS</span></footer>
+  </main>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
