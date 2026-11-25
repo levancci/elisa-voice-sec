@@ -2,6 +2,8 @@
 
 Remember the old "Voice Match" / voice unlock on Samsung and Google phones? You'd say a phrase and the phone opened. Elisa is my attempt to rebuild that idea from scratch, and it runs **fully offline** on a laptop.
 
+![Elisa voice check-in screen](docs/images/elisa-screenshot.png)
+
 Here's how it works. The app reads out four random digits, like `4 7 1 9`. You say them back. Elisa then checks two things at once:
 
 1. **Did you say the right digits?** A small speech model (Vosk) listens for the exact sequence.
